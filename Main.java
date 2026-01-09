@@ -1,61 +1,75 @@
 package ru.netology;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
+import static ru.netology.AddRemoveBasket.*;
+import static ru.netology.Filter.filterProduct;
+
 public class Main {
+
+    static Map<Product, Integer> products = new HashMap<>();
     public static final String currency = "руб.";
 
     public static void main(String[] args) {
+        Basket basket = new Basket(new HashMap<>(), products);
 
-        //Вывод доступных для покупки товаров
+        products.put(new Product("Хлеб белый", 60), 10);
+        products.put(new Product("Хлеб черный", 50), 10);
+        products.put(new Product("Молоко", 100), 10);
+        products.put(new Product("Гречка", 80), 10);
+        products.put(new Product("Орехи грецкие", 250), 10);
+        products.put(new Product("Орехи бразильские", 350), 10);
 
-        System.out.println("Список доступных для покупки товаров:");
-        String[] product = {"Хлеб (1 бул.)", "Молоко (1 л.)", "Гречка (1 кг.)", "Орехи (200 гр.)"};
-        int[] pricesProduct = {60, 100, 80, 250};
-        for (int i = 0; i < product.length; i++) {
-            System.out.println(product[i] + " - " + pricesProduct[i] + " руб.");
-        }
+        DataProducts dataProducts = new DataProducts(products);
 
-        /*//Фильтрация товаров по ключевым словам, ценам, производителям
+        shouListProduct();
 
-        System.out.println("Выберете фильтр товаров:");
-        String[] filterProduct = {"0 - выход", "1 - по ключевому слову", "2 - по цене ", "3 - по производителю"};
-        System.out.println(Arrays.toString(filterProduct));*/
-
-        //Составление продуктовой корзины пользователя
         Scanner scanner = new Scanner(System.in);
-        int[] basket = new int[product.length];
-        int totalAmount = 0;
         while (true) {
-            System.out.println("Ведите номер продукта и его количество: ");
+            System.out.println("Выберите действие:");
+            System.out.println("1 - отфильтровать");
+            System.out.println("2 - добавить в корзину");
+            System.out.println("3 - удалить из корзины");
+            System.out.println("4 - показать корзину");
+            System.out.println("5 -завершить покупку");
             String input = scanner.nextLine();
-            if ("end".equals(input)) {
-                break;
-            }
-            String[] parts = input.split(" ");
-            if (parts.length < 2) {
-                System.out.println("Вы ввели данные не полностью! ");
-            } else if (Integer.parseInt(parts[0]) <= 0 || Integer.parseInt(parts[0]) > product.length) {
-                int productIndex = Integer.parseInt(parts[0]) - 1;
-                int productCount = Integer.parseInt(parts[1]);
-                basket[productIndex] += productCount;
-                totalAmount += pricesProduct[productIndex] * productCount;
+            switch (input) {
+                case "1":
+                    filterProduct();
+                    break;
+                case "2":
+                    addProductBacket(basket);
+                    break;
+                case "3":
+                    removeProductBacket(basket);
+                    break;
+                case "4":
+                    printProductBasket(basket);
+                    break;
+                case "5":
+                    endBuyProduct(basket);
+                    break;
+                default:
+                    System.out.println("Такой команды нет!");
 
-            } else {
-                System.out.println("Продукта под таким номером нет!");
             }
         }
-        System.out.println("Список продуктов: ");
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] > 0) {
-                System.out.println(product[i] + " " + basket[i] + " " + pricesProduct[i] + " " + currency);
-            }
-        }
-        System.out.println("Общая сумма: " + totalAmount);
     }
-
-    //Трекинг заказа в системе доставки
-    //Возврат заказа, повторение заказа
-    //Система рейтинга для товаров
-    //Простая рекомендательная система для покупок
+    static void shouListProduct() {
+        System.out.println("Список доступных продуктов в магазине: ");
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            Product product = entry.getKey();
+            String nameList = String.format("наименование: %s, цена: %d, количество: %d ", product.getName(), product.getPrice(), entry.getValue());
+            System.out.println(nameList);
+        }
+    }
+    static void printAllProduct() {
+        shouListProduct();
+    }
 }
+
+
+
+
