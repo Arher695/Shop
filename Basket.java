@@ -3,6 +3,7 @@ package ru.netology;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ru.netology.Main.currency;
 import static ru.netology.Main.shouListProduct;
 
 
@@ -58,7 +59,7 @@ public class Basket {
             for (Map.Entry<Product, Integer> entry : basketProduct.entrySet()) {
                 Product product = entry.getKey();
                 Integer totalAmount = product.getPrice() * entry.getValue();
-                String nameList = String.format("наименование: %s, сумма: %d, количество: %d ", product.getName(), product.getPrice() * entry.getValue(), entry.getValue());
+                String nameList = String.format("наименование: %s, сумма: %d %s, количество: %d ", product.getName(), product.getPrice() * entry.getValue(), currency, entry.getValue());
                 System.out.println(nameList);
             }
         }
@@ -71,7 +72,7 @@ public class Basket {
             System.out.println("Вы купили: ");
             for (Map.Entry<Product, Integer> entry : basketProduct.entrySet()) {
                 Product product = entry.getKey();
-                String nameList = String.format("наименование: %s, сумма: %d, количество: %d ", product.getName(), product.getPrice() * entry.getValue(), entry.getValue());
+                String nameList = String.format("наименование: %s, сумма: %d %s, количество: %d ", product.getName(), product.getPrice() * entry.getValue(), currency, entry.getValue());
                 System.out.println(nameList);
                 basketProduct.clear();
                 shouListProduct();

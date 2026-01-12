@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static ru.netology.Main.printAllProduct;
-import static ru.netology.Main.products;
+import static ru.netology.Main.*;
 
 
 public class Filter {
@@ -66,7 +65,7 @@ public class Filter {
         }
         for (Map.Entry<Product, Integer> entry : filterProduct.entrySet()) {
             Product product = entry.getKey();
-            String nameList = String.format("наименование: %s, цена: %d, количество: %d ", product.getName(), product.getPrice(), entry.getValue());
+            String nameList = String.format("наименование: %s, цена: %d %s, количество: %d ", product.getName(), product.getPrice(), currency, entry.getValue());
             System.out.println(nameList);
         }
     }

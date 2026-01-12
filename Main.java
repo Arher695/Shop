@@ -7,9 +7,13 @@ import java.util.Scanner;
 import static ru.netology.AddRemoveBasket.*;
 import static ru.netology.Filter.filterProduct;
 
+// Single responsibility principle, программа разделена на классы и логические блоки
 public class Main {
 
     static Map<Product, Integer> products = new HashMap<>();
+
+
+    //Magic  Principle -  используем константы
     public static final String currency = "руб.";
 
     public static void main(String[] args) {
@@ -24,6 +28,7 @@ public class Main {
 
         DataProducts dataProducts = new DataProducts(products);
 
+//принцип DRY - повторяющийся вывод списка продуктов на экран выносим в отдельный метод
         shouListProduct();
 
         Scanner scanner = new Scanner(System.in);
@@ -57,14 +62,18 @@ public class Main {
             }
         }
     }
+
+    //принцип DRY - повторяющийся вывод списка продуктов на экран выносим в отдельный метод
+
     static void shouListProduct() {
         System.out.println("Список доступных продуктов в магазине: ");
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             Product product = entry.getKey();
-            String nameList = String.format("наименование: %s, цена: %d, количество: %d ", product.getName(), product.getPrice(), entry.getValue());
+            String nameList = String.format("наименование: %s, цена: %d %s, количество: %d ", product.getName(), product.getPrice(), currency, entry.getValue());
             System.out.println(nameList);
         }
     }
+
     static void printAllProduct() {
         shouListProduct();
     }
